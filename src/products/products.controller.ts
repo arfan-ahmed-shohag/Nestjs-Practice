@@ -1,5 +1,6 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { ProductsService } from './products.service.js';
+import { CreateProductDto } from './dto/create-products.dto.js';
 
 @Controller('products')
 export class ProductsController {
@@ -13,4 +14,10 @@ export class ProductsController {
     findOne(@Param('id', ParseIntPipe) id: number) {
         return this.productsService.findOne(id);
     }
+
+    @Post()
+    create(@Body() createProductDto: CreateProductDto){
+        return this.productsService.create(createProductDto);
+    }
+
 }

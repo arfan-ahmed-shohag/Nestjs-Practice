@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Products } from './products.interface.js';
+import { CreateProductDto } from './dto/create-products.dto.js';
 
 @Injectable()
 export class ProductsService {
-    private readonly products = [
+    private readonly products : Products[] = [
         {
             id: 1,
             name: "Laptop",
@@ -56,5 +58,16 @@ export class ProductsService {
             throw new NotFoundException(`Product with ID ${id} not found`);
         }
         return ticket;
+    }
+
+    create(product:CreateProductDto) {
+        const newProduct = {
+            id: this.products.length +1,
+            ...product
+        }
+
+        this.products.push(newProduct);
+
+        return newProduct;
     }
 }
