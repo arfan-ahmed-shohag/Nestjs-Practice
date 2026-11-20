@@ -5,8 +5,9 @@ import { Request, Response, NextFunction } from 'express';
 export class RequestLoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const startTime = Date.now();
+    const requestedIp = req.ip;
 
-    console.log(`[REQUEST] ${req.method} ${req.originalUrl} - ${new Date().toISOString()}`);
+    console.log(`[REQUEST] ${req.method} ${req.originalUrl} - ${new Date().toISOString()} - ${requestedIp}`);
 
     res.on('finish', ()=>{
       const elapsedTime = Date.now() - startTime;
