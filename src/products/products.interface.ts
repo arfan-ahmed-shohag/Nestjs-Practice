@@ -3,7 +3,7 @@ export interface Products {
     name: string;
     price: number;
     description: string;
-    specifications: {
+    specifications?: {
         processor?: string;
         ram?: string;
         storage?: string;
