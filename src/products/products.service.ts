@@ -57,4 +57,15 @@ export class ProductsService {
         }
         return ticket;
     }
+
+    create(product:any) {
+        const newProduct = {
+            id: this.products.length +1,
+            ...product
+        }
+
+        this.products.push(newProduct);
+
+        return newProduct;
+    }
 }
