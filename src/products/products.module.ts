@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ProductsController } from './products.controller.js';
 import { ProductsService } from './products.service.js';
-import { RequestLoggerMiddleware } from '../common/request-logger.middleware.js';
+import { RequestLoggerMiddleware } from '../common/middleware/request-logger.middleware.js';
 
 @Module({
   controllers: [ProductsController],
