@@ -3,9 +3,12 @@ import { AppModule } from './app.module.js';
 import { ValidationPipe } from '@nestjs/common';
 import { ResponseInterceptor } from './common/interceptor/response.interceptor.js';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
+import { ConfigService } from '@nestjs/config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.setGlobalPrefix('api');
 
   app.useGlobalPipes(
@@ -17,8 +20,14 @@ async function bootstrap() {
   )
 
   app.useGlobalInterceptors(new ResponseInterceptor());
-  app.useGlobalFilters(new HttpExceptionFilter())
+  app.useGlobalFilters(new HttpExceptionFilter());
 
-  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
+  const config = new DocumentBuilder().setTitle('Product Management API').setDescription('API for managing products').setVersion('1.0').build();
+
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
+
+  await app.listen(Number(app.get(ConfigService).get<string>('PORT')) ?? 3000, '0.0.0.0');
 }
 await bootstrap();
